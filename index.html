@@ -26,6 +26,7 @@
         }
     </script>
     <style>
+        html { scroll-behavior: smooth; }
         body { background-color: #0A0A0C; color: #E4E4E7; }
         .gold-gradient-text {
             background: linear-gradient(135deg, #FFF 0%, #D4AF37 50%, #AA7C11 100%);
@@ -38,7 +39,7 @@
 </head>
 <body class="font-sans min-h-screen flex flex-col justify-between selection:bg-artGold selection:text-artDark">
 
-    <!-- HEADER (Version initiale aérée avec le badge vert) -->
+    <!-- HEADER -->
     <header class="border-b border-white/10 backdrop-blur-md sticky top-0 z-40 bg-artDark/90">
         <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="text-center sm:text-left">
@@ -50,9 +51,9 @@
                 </p>
             </div>
             
-            <div class="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-full">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span class="text-xs text-emerald-300 font-medium tracking-wide uppercase">Exposition en ligne</span>
+            <!-- Sélecteur d'années en haut à droite -->
+            <div id="yearSelectorContainer" class="flex items-center gap-2">
+                <!-- Généré dynamiquement en JS -->
             </div>
         </div>
     </header>
@@ -70,7 +71,7 @@
         </div>
 
         <!-- GRILLE DES ANNEES ET PROJETS -->
-        <div id="projectsContainer" class="space-y-12">
+        <div id="projectsContainer" class="space-y-16">
             <div class="text-center text-zinc-500 py-12">Recherche des projets en cours...</div>
         </div>
 
@@ -91,6 +92,7 @@
 
         async function loadAllProjects() {
             const container = document.getElementById("projectsContainer");
+            const yearSelectorContainer = document.getElementById("yearSelectorContainer");
             
             try {
                 // 1. Détecter les dossiers des années scolaires (ex: 2026-2027)
@@ -98,7 +100,10 @@
                 if (!resYears.ok) throw new Error("Erreur accès dépôt");
                 
                 const rootFiles = await resYears.json();
-                const yearFolders = rootFiles.filter(f => f.type === "dir" && f.name.match(/^\d{4}-\d{4}$/));
+                // Tri des années de la plus récente à la plus ancienne
+                const yearFolders = rootFiles
+                    .filter(f => f.type === "dir" && f.name.match(/^\d{4}-\d{4}$/))
+                    .sort((a, b) => b.name.localeCompare(a.name));
 
                 if (yearFolders.length === 0) {
                     container.innerHTML = `<div class="text-center text-zinc-500 py-12">Aucune année scolaire trouvée.</div>`;
@@ -106,6 +111,15 @@
                 }
 
                 container.innerHTML = "";
+                let isFirstProjectOverall = true;
+
+                // Génération du menu de sélection d'années en haut à droite
+                yearSelectorContainer.innerHTML = `
+                    <label for="yearSelect" class="text-xs text-zinc-400 hidden sm:inline">Année :</label>
+                    <select id="yearSelect" onchange="scrollToYear(this.value)" class="bg-artCard text-artGold border gold-border text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:border-artGold">
+                        ${yearFolders.map(y => `<option value="year-${y.name}">${y.name}</option>`).join('')}
+                    </select>
+                `;
 
                 // 2. Parcourir chaque année et chercher les sous-dossiers projet*
                 for (const yearFolder of yearFolders) {
@@ -117,7 +131,8 @@
 
                     if (projectFolders.length > 0) {
                         const yearSection = document.createElement("div");
-                        yearSection.className = "space-y-6";
+                        yearSection.id = `year-${yearFolder.name}`;
+                        yearSection.className = "space-y-6 pt-4";
                         
                         yearSection.innerHTML = `
                             <h3 class="font-serif text-xl sm:text-2xl text-artGold border-b border-white/10 pb-3 flex items-center gap-3">
@@ -129,14 +144,26 @@
                         container.appendChild(yearSection);
                         const grid = document.getElementById(`grid-${yearFolder.name}`);
 
-                        projectFolders.forEach(p => {
+                        projectFolders.forEach((p, index) => {
                             const cleanTitle = p.name.replace(/^projet\d*_/i, '').replace(/_/g, ' ');
                             const formattedTitle = cleanTitle.charAt(0).toUpperCase() + cleanTitle.slice(1);
+                            
+                            // Le badge "En cours" s'affiche uniquement sur le tout premier projet de la toute première année
+                            const isCurrentProject = isFirstProjectOverall;
+                            if (isFirstProjectOverall) isFirstProjectOverall = false;
 
                             grid.innerHTML += `
-                                <a href="./${yearFolder.name}/${p.name}/index.html" class="bg-artCard border gold-border rounded-xl p-6 block hover:border-artGold transition duration-300 gold-glow group">
-                                    <span class="text-xs uppercase tracking-widest text-zinc-500 group-hover:text-artGold transition">Projet Interactif</span>
-                                    <h4 class="font-serif text-2xl font-semibold text-white mt-2 group-hover:text-artGold transition">${formattedTitle}</h4>
+                                <a href="./${yearFolder.name}/${p.name}/index.html" class="bg-artCard border gold-border rounded-xl p-6 block hover:border-artGold transition duration-300 gold-glow group relative">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs uppercase tracking-widest text-zinc-500 group-hover:text-artGold transition">Projet Interactif</span>
+                                        ${isCurrentProject ? `
+                                            <span class="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                                <span class="text-[10px] text-emerald-300 font-medium uppercase tracking-wide">En cours</span>
+                                            </span>
+                                        ` : ''}
+                                    </div>
+                                    <h4 class="font-serif text-2xl font-semibold text-white mt-1 group-hover:text-artGold transition">${formattedTitle}</h4>
                                     <div class="mt-4 flex items-center justify-between text-xs text-zinc-400">
                                         <span>Explorer la galerie</span>
                                         <span class="group-hover:translate-x-1 transition duration-200">→</span>
@@ -153,6 +180,13 @@
 
             } catch (err) {
                 container.innerHTML = `<div class="text-center text-rose-400 py-12">Impossible de charger les projets.</div>`;
+            }
+        }
+
+        function scrollToYear(yearId) {
+            const el = document.getElementById(yearId);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
             }
         }
     </script>
