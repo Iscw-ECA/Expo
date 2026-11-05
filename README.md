@@ -7,7 +7,7 @@ Chaque image jpg doit porter EXACTEMENT (minuscule et Majuscule) le même nom qu
 
 Le tout doit être importé dans un Dossier (reprenant année scolaire) / projet(num)_nomduprojet (!!!le tout sans Majuscule)/assets (le assets sans majuscule est indispensable) exemple : 2026-2027/projet1_autoportrait/assets
 
-Création des dossiers dans projet
+Création des dossiers dans le projet & ADD FILES - CREATE NEW FILES...Les dossiers se créent dés qu'un / est inséré
 
  Parfois nécessaire d'importer en plusieurs fois.
  
