@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Symphonie des Visages | Exposition</title>
+    <title>Autoportraits & Univers Sonores | Exposition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
@@ -34,6 +34,7 @@
         }
         .gold-border { border-color: rgba(212, 175, 55, 0.3); }
         .gold-border-focus:focus { border-color: #D4AF37; outline: none; }
+        .gold-glow { box-shadow: 0 0 25px -5px rgba(212, 175, 55, 0.15); }
         .bar { animation: soundWave 1.2s infinite ease-in-out; }
         @keyframes soundWave {
             0%, 100% { height: 4px; }
@@ -48,10 +49,10 @@
         <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-4">
                 <a href="../../index.html" class="text-xs uppercase tracking-widest text-zinc-400 hover:text-artGold transition flex items-center gap-1">
-                    ← Accueil Projet
+                    ← Accueil Exposition
                 </a>
                 <span class="text-zinc-600">|</span>
-                <h1 class="font-serif text-xl sm:text-2xl font-bold gold-gradient-text" id="projectTitle">Symphonie des Visages</h1>
+                <h1 class="font-serif text-xl sm:text-2xl font-bold gold-gradient-text">Projet 01 • Autoportrait</h1>
             </div>
             
             <div id="filterContainer" class="flex flex-wrap justify-center gap-2"></div>
@@ -60,23 +61,90 @@
 
     <!-- MAIN GALLERY -->
     <main class="max-w-7xl mx-auto px-4 py-8 flex-grow">
-        <div class="text-center max-w-2xl mx-auto mb-12">
-            <p class="text-sm uppercase tracking-widest text-artGold mb-2">Année 2026-2027</p>
-            <h2 class="font-serif text-3xl sm:text-4xl font-normal text-white mb-4">Autoportraits & Soundscapes</h2>
-            <p class="text-zinc-400 text-sm leading-relaxed">
-                Cliquez sur un autoportrait pour l'agrandir et déclencher l'univers sonore composé par l'élève.
-            </p>
+        
+        <!-- EN-TÊTE DU PROJET & PRÉSENTATION -->
+        <div class="max-w-4xl mx-auto mb-16">
+            <div class="text-center mb-6">
+                <span class="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-widest bg-artGold/10 text-artGold border gold-border rounded-full mb-3">
+                    Année Scolaire 2026-2027 • Projet 01
+                </span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-normal text-white mb-4">
+                    Autoportraits & <span class="gold-gradient-text italic font-serif">Univers Sonores</span>
+                </h2>
+                <p class="font-serif text-lg text-artGoldHover italic">
+                    « Bienvenue dans l’univers intérieur de nos élèves ! »
+                </p>
+            </div>
+
+            <!-- Carte de présentation stylisée -->
+            <div class="bg-artCard border gold-border rounded-2xl p-6 sm:p-8 space-y-6 text-zinc-300 text-sm leading-relaxed gold-glow">
+                <p class="text-base text-zinc-200">
+                    Un autoportrait est-il seulement le reflet d'un miroir ? Pour les élèves de 1<sup>re</sup> secondaire, la réponse est un « non » créatif et vibrant ! 
+                    À travers ce premier grand projet de l'année, nos jeunes artistes ont exploré qui ils sont au-delà des apparences. L'objectif ? Dépasser la simple reproduction du visage pour façonner une œuvre complète, mêlant les arts plastiques, l'expression du corps et le design sonore.
+                </p>
+
+                <div class="border-t border-white/10 pt-6">
+                    <h3 class="font-serif text-lg font-semibold text-artGold mb-4 flex items-center gap-2">
+                        <span>✨</span> Ce que les élèves ont appris et travaillé :
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-black/40 border border-white/5 rounded-xl p-4">
+                            <h4 class="font-semibold text-white mb-2 text-xs uppercase tracking-wider text-artGold">1. L'Héritage des Maîtres</h4>
+                            <p class="text-xs text-zinc-400">
+                                Analyse et réinvestment des démarches de grands repères de l'histoire de l'art : la touche expressive de <strong>Vincent Van Gogh</strong>, la symbolique intime de <strong>Frida Kahlo</strong>, la force graphique de <strong>Jean-Michel Basquiat</strong>, et la musique des couleurs de <strong>Wassily Kandinsky</strong> et <strong>Mark Rothko</strong>.
+                            </p>
+                        </div>
+
+                        <div class="bg-black/40 border border-white/5 rounded-xl p-4">
+                            <h4 class="font-semibold text-white mb-2 text-xs uppercase tracking-wider text-artGold">2. Le Corps & la Posture</h4>
+                            <p class="text-xs text-zinc-400">
+                                Travail sur l'attitude physique, le tonus musculaire, le regard et le Tableau Vivant pour incarner une véritable présence scénique.
+                            </p>
+                        </div>
+
+                        <div class="bg-black/40 border border-white/5 rounded-xl p-4">
+                            <h4 class="font-semibold text-white mb-2 text-xs uppercase tracking-wider text-artGold">3. La Signature Sonore</h4>
+                            <p class="text-xs text-zinc-400">
+                                Création et enregistrement d'une capsule sonore unique de 10 secondes (percussions corporelles, bruitages, matières acoustiques, musique) révélant la dimension invisible et musicale de l'œuvre.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Consigne d'exploration -->
+                <div class="bg-artGold/10 border gold-border rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <h4 class="font-semibold text-artGold text-xs uppercase tracking-wider flex items-center gap-1.5">
+                            🎧 Comment explorer cette galerie interactive ?
+                        </h4>
+                        <p class="text-xs text-zinc-300">
+                            Cliquez sur le portrait d'un élève. Prenez le temps d'activer le son : écoutez la création audio en observant les détails plastiques et découvrez la note d'intention rédigée par l'artiste !
+                        </p>
+                        <p class="text-xs italic text-artGoldHover mt-1">
+                            💬 N'hésitez pas à leur laisser un petit commentaire positif (uniquement).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Signature -->
+                <div class="text-right pt-2 border-t border-white/5">
+                    <p class="font-serif italic text-xs text-zinc-400">
+                        Les élèves de 1<sup>re</sup> secondaire, 2D & <span class="text-artGold font-semibold">Mme Finkels</span> (professeur d'ECA)
+                    </p>
+                </div>
+            </div>
         </div>
 
-        <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+        <!-- GRILLE DE LA GALERIE -->
+        <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div class="text-center text-zinc-500 col-span-full py-12">Scan automatique des œuvres...</div>
+        </div>
     </main>
 
-    <!-- FOOTER & ADMIN TRIGGER -->
-    <footer class="border-t border-white/10 py-6 text-center text-xs text-zinc-500 relative">
+    <!-- FOOTER -->
+    <footer class="border-t border-white/10 py-6 text-center text-xs text-zinc-500">
         <p>© 2026-2027 Exposition Artistique • Tous droits réservés</p>
-        <button onclick="promptAdmin()" title="Accès administration d'urgence" class="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-700 hover:text-artGold transition">
-            🔒
-        </button>
     </footer>
 
     <!-- LIGHTBOX POP-UP -->
@@ -94,7 +162,7 @@
                     <h3 id="modalTitle" class="font-serif text-2xl font-bold text-white mb-1"></h3>
                     <p id="modalAuthor" class="text-sm text-zinc-400 mb-6"></p>
 
-                    <div class="bg-black/40 border border-white/10 rounded-lg p-4 mb-6">
+                    <div id="audioContainer" class="bg-black/40 border border-white/10 rounded-lg p-4 mb-6">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-xs uppercase tracking-wider text-zinc-400">Univers Sonore</span>
                             <div id="audioWave" class="flex items-end gap-1 h-6 opacity-40">
@@ -106,10 +174,11 @@
                         </div>
                         <audio id="modalAudio" controls class="w-full h-10 rounded"></audio>
                     </div>
+                    <p id="noAudioMsg" class="hidden text-xs text-zinc-500 italic mb-6">Aucune création sonore pour cette œuvre.</p>
                 </div>
 
                 <div class="border-t border-white/10 pt-4">
-                    <h4 class="text-sm font-semibold text-white mb-2">Laissez une impression</h4>
+                    <h4 class="text-sm font-semibold text-white mb-2">Laissez une impression positive</h4>
                     <form id="commentForm" onsubmit="submitComment(event)" class="space-y-3">
                         <input type="hidden" id="artworkId">
                         <input type="text" id="commentAuthor" placeholder="Votre nom (optionnel)" class="w-full bg-black/50 border border-white/10 rounded px-3 py-2 text-sm text-white gold-border-focus">
@@ -124,58 +193,71 @@
         </div>
     </div>
 
-    <!-- MODALE ADMIN SURCHARGE -->
-    <div id="adminModal" class="fixed inset-0 z-50 bg-black/95 hidden flex items-center justify-center p-4">
-        <div class="bg-artCard border gold-border rounded-xl p-6 max-w-md w-full">
-            <h3 class="font-serif text-xl font-bold text-artGold mb-4">Administration d'urgence</h3>
-            <p class="text-xs text-zinc-400 mb-4">Surcharger manuellement les liens d'un élève (URL image/audio externe).</p>
-            
-            <div class="space-y-3 text-sm">
-                <input type="text" id="adminWorkId" placeholder="ID Élève (ex: 1)" class="w-full bg-black border border-white/10 rounded p-2 text-white">
-                <input type="text" id="adminImageUrl" placeholder="Nouvelle URL Image (Optionnel)" class="w-full bg-black border border-white/10 rounded p-2 text-white">
-                <input type="text" id="adminAudioUrl" placeholder="Nouvelle URL Audio (Optionnel)" class="w-full bg-black border border-white/10 rounded p-2 text-white">
-            </div>
-
-            <div class="flex gap-2 mt-6">
-                <button onclick="saveAdminOverride()" class="flex-1 bg-artGold text-artDark font-semibold py-2 rounded text-xs">Appliquer</button>
-                <button onclick="closeAdminModal()" class="flex-1 bg-zinc-800 text-zinc-400 py-2 rounded text-xs">Annuler</button>
-            </div>
-        </div>
-    </div>
-
     <script>
+        const GITHUB_USER = "JESSXA25";
+        const GITHUB_REPO = "Galerie-ISCW-ECA";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3GdqIqw4HJ5kfuEUuETfxIrJy31a2Orj9Q-7NIR62dJc8eRv1ngtSbIJPTL0SrmsbVA/exec";
+        
         const CURRENT_YEAR = "2026-2027";
-        const CURRENT_PROJECT = "Projet 1 - Symphonie des Visages";
-        const GOOGLE_SCRIPT_URL = "VOTRE_URL_GOOGLE_APPS_SCRIPT_ICI";
-        const ADMIN_PASSWORD = "1234"; // À personnaliser
+        const CURRENT_PROJECT = "projet1_autoportrait"; // Nom exact du sous-dossier sur GitHub
 
-        // RÈGLE DE NOMMAGE DANS LE DOSSIER ASSETS: classe_nom_titre.jpg & .mp3
-        const BASE_WORKS = [
-            { id: "1", classe: "1Ca", nom: "Lucas", titre: "Autoportrait Électrique", file: "1Ca_Lucas" },
-            { id: "2", classe: "1Ca", nom: "Emma", titre: "Echos du Silence", file: "1Ca_Emma" },
-            { id: "3", classe: "1Cb", nom: "Thomas", titre: "Regards Croisés", file: "1Cb_Thomas" },
-            { id: "4", classe: "1Cc", nom: "Sarah", titre: "Harmonie Sombre", file: "1Cc_Sarah" }
-        ];
-
-        let manualOverrides = {};
         let WORKS = [];
         let activeFilter = "ALL";
 
         document.addEventListener("DOMContentLoaded", () => {
-            buildWorksList();
-            renderFilters();
-            renderGallery();
+            fetchWorksFromGithub();
         });
 
-        function buildWorksList() {
-            WORKS = BASE_WORKS.map(item => {
-                const over = manualOverrides[item.id] || {};
-                return {
-                    ...item,
-                    imageUrl: over.imageUrl || `./assets/${item.file}.jpg`,
-                    audioUrl: over.audioUrl || `./assets/${item.file}.mp3`
-                };
-            });
+        async function fetchWorksFromGithub() {
+            const grid = document.getElementById("galleryGrid");
+            try {
+                // Lecture automatique du contenu du dossier assets/
+                const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${CURRENT_YEAR}/${CURRENT_PROJECT}/assets`);
+                
+                if (!res.ok) {
+                    grid.innerHTML = `<div class="text-center text-zinc-500 col-span-full py-12">Le dossier assets/ n'a pas encore été créé ou est vide.</div>`;
+                    return;
+                }
+
+                const files = await res.json();
+                
+                // Filtrer les fichiers images (.jpg, .jpeg, .png, .webp)
+                const imageFiles = files.filter(f => f.name.match(/\.(jpg|jpeg|png|webp)$/i));
+                const audioFiles = files.filter(f => f.name.match(/\.(mp3|wav|m4a)$/i));
+
+                if (imageFiles.length === 0) {
+                    grid.innerHTML = `<div class="text-center text-zinc-500 col-span-full py-12">Aucune image déposée dans assets/ pour le moment.</div>`;
+                    return;
+                }
+
+                WORKS = imageFiles.map((img, index) => {
+                    const rawNameWithoutExt = img.name.replace(/\.[^/.]+$/, "");
+                    const parts = rawNameWithoutExt.split("_");
+
+                    // Découpage automatique : Classe_Nom_Titre (ex: 1Ca_Lucas_Autoportrait)
+                    const classe = parts[0] || "Exposition";
+                    const nom = parts[1] || "Élève";
+                    const titre = parts.slice(2).join(" ") || "Autoportrait";
+
+                    // Détection du MP3 correspondant (ex: 1Ca_Lucas.mp3)
+                    const matchingAudio = audioFiles.find(a => a.name.replace(/\.[^/.]+$/, "") === rawNameWithoutExt);
+
+                    return {
+                        id: String(index + 1),
+                        classe: classe,
+                        nom: nom,
+                        titre: titre,
+                        imageUrl: `./assets/${img.name}`,
+                        audioUrl: matchingAudio ? `./assets/${matchingAudio.name}` : null
+                    };
+                });
+
+                renderFilters();
+                renderGallery();
+
+            } catch (err) {
+                grid.innerHTML = `<div class="text-center text-rose-400 col-span-full py-12">Erreur de chargement des œuvres. Vérifiez vos identifiants GitHub.</div>`;
+            }
         }
 
         function renderFilters() {
@@ -202,6 +284,7 @@
                     <div class="relative aspect-square bg-black overflow-hidden">
                         <img src="${w.imageUrl}" alt="${w.titre}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy">
                         <span class="absolute top-3 left-3 bg-black/70 text-artGold text-xs px-2.5 py-1 rounded border gold-border font-medium">${w.classe}</span>
+                        ${w.audioUrl ? '<span class="absolute bottom-3 right-3 bg-black/70 text-artGold text-xs p-1.5 rounded-full border gold-border" title="Son disponible">🎵</span>' : ''}
                     </div>
                     <div class="p-4">
                         <h3 class="font-serif text-lg font-semibold text-white group-hover:text-artGold transition">${w.titre}</h3>
@@ -222,10 +305,21 @@
             document.getElementById("artworkId").value = `${work.classe}_${work.nom}`;
             
             const audio = document.getElementById("modalAudio");
-            audio.src = work.audioUrl;
-            const wave = document.getElementById("audioWave");
-            audio.onplay = () => wave.classList.remove("opacity-40");
-            audio.onpause = () => wave.classList.add("opacity-40");
+            const audioContainer = document.getElementById("audioContainer");
+            const noAudioMsg = document.getElementById("noAudioMsg");
+
+            if (work.audioUrl) {
+                audio.src = work.audioUrl;
+                audioContainer.classList.remove("hidden");
+                noAudioMsg.classList.add("hidden");
+                const wave = document.getElementById("audioWave");
+                audio.onplay = () => wave.classList.remove("opacity-40");
+                audio.onpause = () => wave.classList.add("opacity-40");
+            } else {
+                audio.src = "";
+                audioContainer.classList.add("hidden");
+                noAudioMsg.classList.remove("hidden");
+            }
 
             document.getElementById("lightbox").classList.remove("hidden");
             document.body.style.overflow = "hidden";
@@ -267,36 +361,6 @@
                 btn.disabled = false;
                 btn.textContent = "Envoyer l'impression";
             });
-        }
-
-        // VERROUILLAGE ADMIN
-        function promptAdmin() {
-            const pass = prompt("Entrez le mot de passe administrateur :");
-            if (pass === ADMIN_PASSWORD) {
-                document.getElementById("adminModal").classList.remove("hidden");
-            } else if (pass !== null) {
-                alert("Mot de passe incorrect.");
-            }
-        }
-
-        function saveAdminOverride() {
-            const id = document.getElementById("adminWorkId").value;
-            const img = document.getElementById("adminImageUrl").value;
-            const aud = document.getElementById("adminAudioUrl").value;
-
-            if (id) {
-                manualOverrides[id] = {
-                    ...(img ? { imageUrl: img } : {}),
-                    ...(aud ? { audioUrl: aud } : {})
-                };
-                buildWorksList();
-                renderGallery();
-                closeAdminModal();
-            }
-        }
-
-        function closeAdminModal() {
-            document.getElementById("adminModal").classList.add("hidden");
         }
     </script>
 </body>
