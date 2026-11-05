@@ -154,14 +154,14 @@
         <p>© 2026-2027 Exposition Artistique • Tous droits réservés</p>
     </footer>
 
-    <!-- LIGHTBOX POP-UP -->
+    <!-- LIGHTBOX POP-UP PRINCIPALE (z-50) -->
     <div id="lightbox" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex items-center justify-center p-2 sm:p-4">
         <div class="bg-artCard border gold-border rounded-xl max-w-5xl w-full overflow-hidden flex flex-col md:flex-row relative max-h-[95vh]">
             <button onclick="closeLightbox()" class="absolute top-3 right-3 z-20 bg-black/80 text-white rounded-full p-2 hover:text-artGold transition border border-white/10">✕</button>
 
             <!-- COLONNE GAUCHE : IMAGE (CLIQUABLE) & DESCRIPTIF DÉDIÉ -->
             <div class="md:w-3/5 bg-black/80 flex flex-col items-center justify-between p-3 sm:p-5 overflow-y-auto max-h-[50vh] md:max-h-[95vh]">
-                <div class="w-full flex-grow flex flex-col items-center justify-center min-h-[30vh] relative group cursor-pointer" onclick="openFullscreen()">
+                <div class="w-full flex-grow flex flex-col items-center justify-center min-h-[30vh] relative group cursor-pointer" onclick="openFullscreen(event)">
                     <img id="modalImage" src="" alt="" class="max-h-[45vh] md:max-h-[65vh] w-auto max-w-full object-contain rounded shadow-2xl transition group-hover:scale-[1.01]">
                     <span class="mt-2 bg-black/70 text-artGold text-[10px] px-2.5 py-1 rounded-full border gold-border opacity-80 group-hover:opacity-100 transition flex items-center gap-1">
                         🔍 Touchez pour agrandir en plein écran
@@ -229,9 +229,9 @@
         </div>
     </div>
 
-    <!-- MODALE PLEIN ÉCRAN POUR L'IMAGE -->
-    <div id="fullscreenModal" class="fixed inset-0 z-60 bg-black/98 hidden flex items-center justify-center p-2 cursor-pointer" onclick="closeFullscreen()">
-        <button onclick="closeFullscreen()" class="absolute top-4 right-4 text-white bg-black/60 rounded-full p-3 hover:text-artGold transition border border-white/20">✕</button>
+    <!-- MODALE PLEIN ÉCRAN POUR L'IMAGE (z-[70] POUR PASSER AU-DESSUS DE TOUT) -->
+    <div id="fullscreenModal" class="fixed inset-0 z-[70] bg-black/98 hidden flex items-center justify-center p-2 cursor-pointer" onclick="closeFullscreen()">
+        <button onclick="closeFullscreen()" class="absolute top-4 right-4 text-white bg-black/60 rounded-full p-3 hover:text-artGold transition border border-white/20 z-[80]">✕</button>
         <img id="fullscreenImage" src="" alt="" class="max-h-[98vh] max-w-[98vw] object-contain rounded shadow-2xl">
     </div>
 
@@ -402,7 +402,8 @@
             document.body.style.overflow = "hidden";
         }
 
-        function openFullscreen() {
+        function openFullscreen(e) {
+            if (e) e.stopPropagation();
             const currentSrc = document.getElementById("modalImage").src;
             if (!currentSrc) return;
             document.getElementById("fullscreenImage").src = currentSrc;
