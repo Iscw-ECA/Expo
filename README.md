@@ -14,3 +14,5 @@ Si un dossier nommé assets est glissé - déposé à partir un d'un ordinateur,
  Parfois nécessaire d'importer en plusieurs fois.
  
 Ensuite COMMIT Changes - commit direcly selectioné - commit
+
+Pour les nouveaux projet, changer via gemini le code html (pas de la page de garde) afin de changer l'explicatif
