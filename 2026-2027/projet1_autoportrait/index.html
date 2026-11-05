@@ -47,12 +47,19 @@
     <!-- HEADER -->
     <header class="border-b border-white/10 backdrop-blur-md sticky top-0 z-40 bg-artDark/90">
         <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 text-center sm:text-left">
                 <a href="../../index.html" class="text-xs uppercase tracking-widest text-zinc-400 hover:text-artGold transition flex items-center gap-1">
                     ← Accueil Exposition
                 </a>
                 <span class="text-zinc-600">|</span>
-                <h1 class="font-serif text-xl sm:text-2xl font-bold gold-gradient-text">Projet 01 • Autoportrait</h1>
+                <div>
+                    <h1 class="font-serif text-lg sm:text-xl font-bold gold-gradient-text leading-tight">
+                        Espace Exposition
+                    </h1>
+                    <p class="text-xs text-zinc-400 font-sans">
+                        Classes d'Education Culturelle et Artistiques - ISCW
+                    </p>
+                </div>
             </div>
             
             <div id="filterContainer" class="flex flex-wrap justify-center gap-2"></div>
@@ -92,7 +99,7 @@
                         <div class="bg-black/40 border border-white/5 rounded-xl p-4">
                             <h4 class="font-semibold text-white mb-2 text-xs uppercase tracking-wider text-artGold">1. L'Héritage des Maîtres</h4>
                             <p class="text-xs text-zinc-400">
-                                Analyse et réinvestment des démarches de grands repères de l'histoire de l'art : la touche expressive de <strong>Vincent Van Gogh</strong>, la symbolique intime de <strong>Frida Kahlo</strong>, la force graphique de <strong>Jean-Michel Basquiat</strong>, et la musique des couleurs de <strong>Wassily Kandinsky</strong> et <strong>Mark Rothko</strong>.
+                                Analyse et réinvestissement des démarches de grands repères de l'histoire de l'art : la touche expressive de <strong>Vincent Van Gogh</strong>, la symbolique intime de <strong>Frida Kahlo</strong>, la force graphique de <strong>Jean-Michel Basquiat</strong>, et la musique des couleurs de <strong>Wassily Kandinsky</strong> et <strong>Mark Rothko</strong>.
                             </p>
                         </div>
 
@@ -119,7 +126,7 @@
                             🎧 Comment explorer cette galerie interactive ?
                         </h4>
                         <p class="text-xs text-zinc-300">
-                            Cliquez sur le portrait d'un élève. Prenez le temps d'activer le son : écoutez la création audio en observant les détails plastiques et découvrez la note d'intention rédigée par l'artiste !
+                            Cliquez sur le portrait d'un élève. Le son se lance automatiquement ! Écoutez la création audio en observant les détails plastiques.
                         </p>
                         <p class="text-xs italic text-artGoldHover mt-1">
                             💬 N'hésitez pas à leur laisser un petit commentaire positif (uniquement).
@@ -194,12 +201,12 @@
     </div>
 
     <script>
-        const GITHUB_USER = "JESSXA25";
+        const GITHUB_USER = "Jessxa25";
         const GITHUB_REPO = "Galerie-ISCW-ECA";
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3GdqIqw4HJ5kfuEUuETfxIrJy31a2Orj9Q-7NIR62dJc8eRv1ngtSbIJPTL0SrmsbVA/exec";
         
         const CURRENT_YEAR = "2026-2027";
-        const CURRENT_PROJECT = "projet1_autoportrait"; // Nom exact du sous-dossier sur GitHub
+        const CURRENT_PROJECT = "projet1_autoportrait";
 
         let WORKS = [];
         let activeFilter = "ALL";
@@ -211,7 +218,6 @@
         async function fetchWorksFromGithub() {
             const grid = document.getElementById("galleryGrid");
             try {
-                // Lecture automatique du contenu du dossier assets/
                 const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${CURRENT_YEAR}/${CURRENT_PROJECT}/assets`);
                 
                 if (!res.ok) {
@@ -221,7 +227,6 @@
 
                 const files = await res.json();
                 
-                // Filtrer les fichiers images (.jpg, .jpeg, .png, .webp)
                 const imageFiles = files.filter(f => f.name.match(/\.(jpg|jpeg|png|webp)$/i));
                 const audioFiles = files.filter(f => f.name.match(/\.(mp3|wav|m4a)$/i));
 
@@ -234,12 +239,12 @@
                     const rawNameWithoutExt = img.name.replace(/\.[^/.]+$/, "");
                     const parts = rawNameWithoutExt.split("_");
 
-                    // Découpage automatique : Classe_Nom_Titre (ex: 1Ca_Lucas_Autoportrait)
                     const classe = parts[0] || "Exposition";
                     const nom = parts[1] || "Élève";
-                    const titre = parts.slice(2).join(" ") || "Autoportrait";
+                    
+                    const customTitle = parts.slice(2).join(" ").trim();
+                    const titre = customTitle ? customTitle : nom;
 
-                    // Détection du MP3 correspondant (ex: 1Ca_Lucas.mp3)
                     const matchingAudio = audioFiles.find(a => a.name.replace(/\.[^/.]+$/, "") === rawNameWithoutExt);
 
                     return {
@@ -247,6 +252,7 @@
                         classe: classe,
                         nom: nom,
                         titre: titre,
+                        hasCustomTitle: Boolean(customTitle),
                         imageUrl: `./assets/${img.name}`,
                         audioUrl: matchingAudio ? `./assets/${matchingAudio.name}` : null
                     };
@@ -256,7 +262,7 @@
                 renderGallery();
 
             } catch (err) {
-                grid.innerHTML = `<div class="text-center text-rose-400 col-span-full py-12">Erreur de chargement des œuvres. Vérifiez vos identifiants GitHub.</div>`;
+                grid.innerHTML = `<div class="text-center text-rose-400 col-span-full py-12">Erreur de chargement des œuvres.</div>`;
             }
         }
 
@@ -288,7 +294,7 @@
                     </div>
                     <div class="p-4">
                         <h3 class="font-serif text-lg font-semibold text-white group-hover:text-artGold transition">${w.titre}</h3>
-                        <p class="text-xs text-zinc-400 mt-1">${w.nom}</p>
+                        <p class="text-xs text-zinc-400 mt-1">${w.hasCustomTitle ? w.nom : `Élève : ${w.nom}`}</p>
                     </div>
                 </div>
             `).join('');
@@ -301,7 +307,7 @@
             document.getElementById("modalImage").src = work.imageUrl;
             document.getElementById("modalClasse").textContent = `Classe ${work.classe}`;
             document.getElementById("modalTitle").textContent = work.titre;
-            document.getElementById("modalAuthor").textContent = `Par ${work.nom}`;
+            document.getElementById("modalAuthor").textContent = work.hasCustomTitle ? `Par ${work.nom}` : `Artiste : ${work.nom}`;
             document.getElementById("artworkId").value = `${work.classe}_${work.nom}`;
             
             const audio = document.getElementById("modalAudio");
@@ -315,6 +321,11 @@
                 const wave = document.getElementById("audioWave");
                 audio.onplay = () => wave.classList.remove("opacity-40");
                 audio.onpause = () => wave.classList.add("opacity-40");
+
+                audio.play().catch(err => {
+                    console.log("Lecture automatique bloquée par le navigateur, clic nécessaire.");
+                });
+
             } else {
                 audio.src = "";
                 audioContainer.classList.add("hidden");
@@ -328,10 +339,17 @@
         function closeLightbox() {
             const audio = document.getElementById("modalAudio");
             audio.pause();
+            audio.currentTime = 0;
             audio.src = "";
             document.getElementById("lightbox").classList.add("hidden");
             document.body.style.overflow = "auto";
         }
+
+        document.getElementById("lightbox").addEventListener("click", (e) => {
+            if (e.target.id === "lightbox") {
+                closeLightbox();
+            }
+        });
 
         function submitComment(e) {
             e.preventDefault();
