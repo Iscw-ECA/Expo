@@ -5,6 +5,10 @@ La convention de nommage des fichiers : Pour que le titre de l'œuvre apparaisse
 
 Chaque image jpg doit porter EXACTEMENT (minuscule et Majuscule) le même nom que le MP3.  Eviter les accents.
 
-Le tout doit être importé dans un Dossier (reprenant année scolaire) / projet(num)_nomduprojet (!!!le tout sans Majuscule)/assets (le assets sans majuscule est indispensable)
-Parfois nécessaire d'importer en plusieurs fois.
+Le tout doit être importé dans un Dossier (reprenant année scolaire) / projet(num)_nomduprojet (!!!le tout sans Majuscule)/assets (le assets sans majuscule est indispensable) exemple : 2026-2027/projet1_autoportrait/assets
+
+Création des dossiers dans projet
+
+ Parfois nécessaire d'importer en plusieurs fois.
+ 
 Ensuite COMMIT Changes - commit direcly selectioné - commit
