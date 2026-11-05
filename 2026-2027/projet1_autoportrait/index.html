@@ -161,19 +161,21 @@
 
             <!-- COLONNE GAUCHE : IMAGE (CLIQUABLE) & DESCRIPTIF DÉDIÉ -->
             <div class="md:w-3/5 bg-black/80 flex flex-col items-center justify-between p-3 sm:p-5 overflow-y-auto max-h-[50vh] md:max-h-[95vh]">
-                <div class="w-full flex-grow flex flex-col items-center justify-center min-h-[30vh] relative group cursor-pointer" onclick="openFullscreen(event)">
-                    <img id="modalImage" src="" alt="" class="max-h-[45vh] md:max-h-[65vh] w-auto max-w-full object-contain rounded shadow-2xl transition group-hover:scale-[1.01]">
-                    <span class="mt-2 bg-black/70 text-artGold text-[10px] px-2.5 py-1 rounded-full border gold-border opacity-80 group-hover:opacity-100 transition flex items-center gap-1">
-                        🔍 Touchez pour agrandir en plein écran
+                <div class="w-full flex-grow flex flex-col items-center justify-center relative group cursor-pointer" onclick="openFullscreen(event)">
+                    <img id="modalImage" src="" alt="" class="max-h-[38vh] md:max-h-[65vh] w-auto max-w-full object-contain rounded shadow-2xl transition group-hover:scale-[1.01]">
+                    
+                    <!-- Macaron loupe repositionné pour éviter la superposition -->
+                    <span class="absolute top-2 right-2 bg-black/80 text-artGold text-[10px] sm:text-xs px-2.5 py-1 rounded-full border gold-border opacity-90 transition flex items-center gap-1 shadow-md">
+                        🔍 Plein écran
                     </span>
                 </div>
 
                 <!-- DESCRIPTIF TYPOGRAPHIQUE (.txt) SOUS L'ŒUVRE -->
-                <div id="descriptionContainer" class="hidden w-full mt-4 bg-artDark/90 border gold-border rounded-xl p-4 gold-glow">
-                    <h4 class="font-serif text-xs font-semibold uppercase tracking-widest text-artGold mb-1.5 flex items-center gap-1.5">
+                <div id="descriptionContainer" class="hidden w-full mt-3 sm:mt-4 bg-artDark/90 border gold-border rounded-xl p-3 sm:p-4 gold-glow">
+                    <h4 class="font-serif text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-artGold mb-1 flex items-center gap-1.5">
                         <span>🎨</span> À propos de cette création
                     </h4>
-                    <p id="modalDescription" class="font-serif text-sm sm:text-base text-zinc-200 italic leading-relaxed whitespace-pre-line border-l-2 border-artGold/40 pl-3 py-0.5"></p>
+                    <p id="modalDescription" class="font-serif text-xs sm:text-base text-zinc-200 italic leading-relaxed whitespace-pre-line border-l-2 border-artGold/40 pl-2.5 sm:pl-3 py-0.5"></p>
                 </div>
             </div>
 
@@ -229,7 +231,7 @@
         </div>
     </div>
 
-    <!-- MODALE PLEIN ÉCRAN POUR L'IMAGE (z-[70] POUR PASSER AU-DESSUS DE TOUT) -->
+    <!-- MODALE PLEIN ÉCRAN POUR L'IMAGE (z-[70]) -->
     <div id="fullscreenModal" class="fixed inset-0 z-[70] bg-black/98 hidden flex items-center justify-center p-2 cursor-pointer" onclick="closeFullscreen()">
         <button onclick="closeFullscreen()" class="absolute top-4 right-4 text-white bg-black/60 rounded-full p-3 hover:text-artGold transition border border-white/20 z-[80]">✕</button>
         <img id="fullscreenImage" src="" alt="" class="max-h-[98vh] max-w-[98vw] object-contain rounded shadow-2xl">
