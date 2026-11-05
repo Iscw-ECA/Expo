@@ -9,6 +9,8 @@ Le tout doit être importé dans un Dossier (reprenant année scolaire) / projet
 
 Création des dossiers dans le projet & ADD FILES - CREATE NEW FILES...Les dossiers se créent dés qu'un / est inséré
 
+Si un dossier nommé assets est glissé - déposé à partir un d'un ordinateur, il se crée automatiquement dans le dossier dans lequel on se trouve (projetx_nomduprojet)
+
  Parfois nécessaire d'importer en plusieurs fois.
  
 Ensuite COMMIT Changes - commit direcly selectioné - commit
