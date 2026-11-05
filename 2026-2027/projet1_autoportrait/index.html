@@ -70,7 +70,7 @@
     <main class="max-w-7xl mx-auto px-4 py-8 flex-grow">
         
         <!-- EN-TÊTE DU PROJET & PRÉSENTATION -->
-        <div class="max-w-4xl mx-auto mb-16">
+        <div class="max-w-4xl mx-auto mb-12 sm:mb-16">
             <div class="text-center mb-6">
                 <span class="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-widest bg-artGold/10 text-artGold border gold-border rounded-full mb-3">
                     Année Scolaire 2026-2027 • Projet 01
@@ -78,14 +78,14 @@
                 <h2 class="font-serif text-3xl sm:text-5xl font-normal text-white mb-4">
                     Autoportraits & <span class="gold-gradient-text italic font-serif">Univers Sonores</span>
                 </h2>
-                <p class="font-serif text-lg text-artGoldHover italic">
+                <p class="font-serif text-base sm:text-lg text-artGoldHover italic">
                     « Bienvenue dans l’univers intérieur de nos élèves ! »
                 </p>
             </div>
 
             <!-- Carte de présentation stylisée -->
-            <div class="bg-artCard border gold-border rounded-2xl p-6 sm:p-8 space-y-6 text-zinc-300 text-sm leading-relaxed gold-glow">
-                <p class="text-base text-zinc-200">
+            <div class="bg-artCard border gold-border rounded-2xl p-5 sm:p-8 space-y-6 text-zinc-300 text-sm leading-relaxed gold-glow">
+                <p class="text-sm sm:text-base text-zinc-200">
                     Un autoportrait est-il seulement le reflet d'un miroir ? Pour les élèves de 1<sup>re</sup> secondaire, la réponse est un « non » créatif et vibrant ! 
                     À travers ce premier grand projet de l'année, nos jeunes artistes ont exploré qui ils sont au-delà des apparences. L'objectif ? Dépasser la simple reproduction du visage pour façonner une œuvre complète, mêlant les arts plastiques, l'expression du corps et le design sonore.
                 </p>
@@ -143,8 +143,8 @@
             </div>
         </div>
 
-        <!-- GRILLE DE LA GALERIE -->
-        <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- GRILLE DE LA GALERIE (2 colonnes sur smartphone, 3-4 sur PC) -->
+        <div id="galleryGrid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
             <div class="text-center text-zinc-500 col-span-full py-12">Scan automatique des œuvres...</div>
         </div>
     </main>
@@ -159,58 +159,68 @@
         <div class="bg-artCard border gold-border rounded-xl max-w-5xl w-full overflow-hidden flex flex-col md:flex-row relative max-h-[95vh]">
             <button onclick="closeLightbox()" class="absolute top-3 right-3 z-20 bg-black/80 text-white rounded-full p-2 hover:text-artGold transition border border-white/10">✕</button>
 
-            <!-- IMAGE AGRANDIE ET ADAPTÉE -->
-            <div class="md:w-3/5 bg-black flex items-center justify-center p-2 sm:p-4 min-h-[40vh] md:min-h-[70vh]">
-                <img id="modalImage" src="" alt="" class="max-h-[55vh] md:max-h-[85vh] w-auto max-w-full object-contain rounded shadow-2xl">
+            <!-- COLONNE GAUCHE : IMAGE & DESCRIPTIF DÉDIÉ -->
+            <div class="md:w-3/5 bg-black/80 flex flex-col items-center justify-between p-3 sm:p-5 overflow-y-auto max-h-[50vh] md:max-h-[95vh]">
+                <div class="w-full flex-grow flex items-center justify-center min-h-[30vh]">
+                    <img id="modalImage" src="" alt="" class="max-h-[45vh] md:max-h-[65vh] w-auto max-w-full object-contain rounded shadow-2xl">
+                </div>
+
+                <!-- DESCRIPTIF TYPOGRAPHIQUE (.txt) SOUS L'ŒUVRE -->
+                <div id="descriptionContainer" class="hidden w-full mt-4 bg-artDark/90 border gold-border rounded-xl p-4 gold-glow">
+                    <h4 class="font-serif text-xs font-semibold uppercase tracking-widest text-artGold mb-1.5 flex items-center gap-1.5">
+                        <span>🎨</span> À propos de cette création
+                    </h4>
+                    <p id="modalDescription" class="font-serif text-sm sm:text-base text-zinc-200 italic leading-relaxed whitespace-pre-line border-l-2 border-artGold/40 pl-3 py-0.5"></p>
+                </div>
             </div>
 
-            <!-- PANNEAU INFOS & COMMENTAIRES -->
-            <div class="md:w-2/5 p-5 sm:p-6 flex flex-col justify-between overflow-y-auto bg-artCard border-t md:border-t-0 md:border-l border-white/10">
+            <!-- COLONNE DROITE : INFOS, AUDIO & COMMENTAIRES -->
+            <div class="md:w-2/5 p-4 sm:p-6 flex flex-col justify-between overflow-y-auto bg-artCard border-t md:border-t-0 md:border-l border-white/10">
                 <div class="space-y-4">
                     <div>
-                        <span id="modalClasse" class="inline-block px-2.5 py-1 text-xs font-semibold uppercase tracking-wider bg-artGold/20 text-artGold rounded mb-2"></span>
-                        <h3 id="modalTitle" class="font-serif text-2xl font-bold text-white mb-1"></h3>
-                        <p id="modalAuthor" class="text-sm text-zinc-400"></p>
+                        <span id="modalClasse" class="inline-block px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider bg-artGold/20 text-artGold rounded mb-1.5"></span>
+                        <h3 id="modalTitle" class="font-serif text-xl sm:text-2xl font-bold text-white mb-0.5"></h3>
+                        <p id="modalAuthor" class="text-xs sm:text-sm text-zinc-400"></p>
                     </div>
 
                     <!-- LECTEUR AUDIO -->
-                    <div id="audioContainer" class="bg-black/40 border border-white/10 rounded-lg p-3.5">
+                    <div id="audioContainer" class="bg-black/40 border border-white/10 rounded-lg p-3">
                         <div class="flex items-center justify-between mb-2">
-                            <span class="text-xs uppercase tracking-wider text-zinc-400">Univers Sonore</span>
-                            <div id="audioWave" class="flex items-end gap-1 h-5 opacity-40">
+                            <span class="text-[10px] uppercase tracking-wider text-zinc-400">Univers Sonore</span>
+                            <div id="audioWave" class="flex items-end gap-1 h-4 opacity-40">
                                 <span class="bar w-1 bg-artGold" style="animation-delay: 0.1s"></span>
                                 <span class="bar w-1 bg-artGold" style="animation-delay: 0.3s"></span>
                                 <span class="bar w-1 bg-artGold" style="animation-delay: 0.2s"></span>
                                 <span class="bar w-1 bg-artGold" style="animation-delay: 0.4s"></span>
                             </div>
                         </div>
-                        <audio id="modalAudio" controls class="w-full h-9 rounded"></audio>
+                        <audio id="modalAudio" controls class="w-full h-8 rounded"></audio>
                     </div>
                     <p id="noAudioMsg" class="hidden text-xs text-zinc-500 italic">Aucune création sonore pour cette œuvre.</p>
 
-                    <!-- LISTE DES COMMENTAIRES DÉJÀ LAISSÉS -->
-                    <div class="border-t border-white/10 pt-4">
-                        <h4 class="text-xs font-semibold uppercase tracking-wider text-artGold mb-3 flex items-center gap-1.5">
+                    <!-- LISTE DES COMMENTAIRES -->
+                    <div class="border-t border-white/10 pt-3">
+                        <h4 class="text-xs font-semibold uppercase tracking-wider text-artGold mb-2 flex items-center gap-1.5">
                             💬 Impressions des visiteurs
                         </h4>
-                        <div id="commentsList" class="space-y-2.5 max-h-36 overflow-y-auto pr-1">
+                        <div id="commentsList" class="space-y-2 max-h-36 overflow-y-auto pr-1">
                             <p class="text-xs text-zinc-500 italic">Soyez le premier à laisser une impression !</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- FORMULAIRE D'ENVOI DE COMMENTAIRE -->
-                <div class="border-t border-white/10 pt-4 mt-4">
-                    <h4 class="text-xs font-semibold text-white mb-2">Laisser une impression positive</h4>
-                    <form id="commentForm" onsubmit="submitComment(event)" class="space-y-2.5">
+                <!-- FORMULAIRE DE COMMENTAIRE -->
+                <div class="border-t border-white/10 pt-3 mt-3">
+                    <h4 class="text-xs font-semibold text-white mb-1.5">Laisser une impression positive</h4>
+                    <form id="commentForm" onsubmit="submitComment(event)" class="space-y-2">
                         <input type="hidden" id="artworkId">
-                        <input type="text" id="commentAuthor" placeholder="Votre nom (optionnel)" class="w-full bg-black/50 border border-white/10 rounded px-3 py-1.5 text-xs text-white gold-border-focus">
-                        <textarea id="commentText" required placeholder="Qu'inspire cette œuvre pour vous ?" rows="2" class="w-full bg-black/50 border border-white/10 rounded px-3 py-1.5 text-xs text-white gold-border-focus"></textarea>
-                        <button type="submit" id="submitBtn" class="w-full bg-artGold hover:bg-artGoldHover text-artDark font-semibold py-2 px-4 rounded text-xs transition">
+                        <input type="text" id="commentAuthor" placeholder="Votre nom (optionnel)" class="w-full bg-black/50 border border-white/10 rounded px-2.5 py-1 text-xs text-white gold-border-focus">
+                        <textarea id="commentText" required placeholder="Qu'inspire cette œuvre pour vous ?" rows="2" class="w-full bg-black/50 border border-white/10 rounded px-2.5 py-1 text-xs text-white gold-border-focus"></textarea>
+                        <button type="submit" id="submitBtn" class="w-full bg-artGold hover:bg-artGoldHover text-artDark font-semibold py-1.5 px-3 rounded text-xs transition">
                             Envoyer l'impression
                         </button>
                     </form>
-                    <p id="commentSuccess" class="hidden text-xs text-emerald-400 mt-2 text-center">Merci pour votre message !</p>
+                    <p id="commentSuccess" class="hidden text-xs text-emerald-400 mt-1 text-center">Merci pour votre message !</p>
                 </div>
             </div>
         </div>
@@ -246,6 +256,7 @@
                 
                 const imageFiles = files.filter(f => f.name.match(/\.(jpg|jpeg|png|webp)$/i));
                 const audioFiles = files.filter(f => f.name.match(/\.(mp3|wav|m4a)$/i));
+                const txtFiles = files.filter(f => f.name.match(/\.txt$/i));
 
                 if (imageFiles.length === 0) {
                     grid.innerHTML = `<div class="text-center text-zinc-500 col-span-full py-12">Aucune image déposée dans assets/ pour le moment.</div>`;
@@ -254,7 +265,11 @@
 
                 WORKS = imageFiles.map((img, index) => {
                     const rawNameWithoutExt = img.name.replace(/\.[^/.]+$/, "");
-                    const parts = rawNameWithoutExt.split("_");
+                    let parts = rawNameWithoutExt.split("_");
+
+                    if (/^\d+$/.test(parts[0])) {
+                        parts.shift();
+                    }
 
                     const classe = parts[0] || "Exposition";
                     const nom = parts[1] || "Élève";
@@ -263,6 +278,7 @@
                     const titre = customTitle ? customTitle : nom;
 
                     const matchingAudio = audioFiles.find(a => a.name.replace(/\.[^/.]+$/, "") === rawNameWithoutExt);
+                    const matchingTxt = txtFiles.find(t => t.name.replace(/\.[^/.]+$/, "") === rawNameWithoutExt);
 
                     return {
                         id: String(index + 1),
@@ -271,7 +287,8 @@
                         titre: titre,
                         hasCustomTitle: Boolean(customTitle),
                         imageUrl: `./assets/${img.name}`,
-                        audioUrl: matchingAudio ? `./assets/${matchingAudio.name}` : null
+                        audioUrl: matchingAudio ? `./assets/${matchingAudio.name}` : null,
+                        txtUrl: matchingTxt ? `./assets/${matchingTxt.name}` : null
                     };
                 });
 
@@ -303,21 +320,21 @@
             const filtered = activeFilter === "ALL" ? WORKS : WORKS.filter(w => w.classe === activeFilter);
 
             grid.innerHTML = filtered.map(w => `
-                <div onclick="openLightbox('${w.id}')" class="bg-artCard border gold-border rounded-xl overflow-hidden cursor-pointer group hover:border-artGold transition duration-300">
+                <div onclick="openLightbox('${w.id}')" class="bg-artCard border gold-border rounded-lg sm:rounded-xl overflow-hidden cursor-pointer group hover:border-artGold transition duration-300">
                     <div class="relative aspect-square bg-black overflow-hidden">
                         <img src="${w.imageUrl}" alt="${w.titre}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy">
-                        <span class="absolute top-3 left-3 bg-black/70 text-artGold text-xs px-2.5 py-1 rounded border gold-border font-medium">${w.classe}</span>
-                        ${w.audioUrl ? '<span class="absolute bottom-3 right-3 bg-black/70 text-artGold text-xs p-1.5 rounded-full border gold-border" title="Son disponible">🎵</span>' : ''}
+                        <span class="absolute top-2 left-2 sm:top-3 sm:left-3 bg-black/70 text-artGold text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded border gold-border font-medium">${w.classe}</span>
+                        ${w.audioUrl ? '<span class="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 bg-black/70 text-artGold text-[10px] sm:text-xs p-1 sm:p-1.5 rounded-full border gold-border" title="Son disponible">🎵</span>' : ''}
                     </div>
-                    <div class="p-4">
-                        <h3 class="font-serif text-lg font-semibold text-white group-hover:text-artGold transition">${w.titre}</h3>
-                        <p class="text-xs text-zinc-400 mt-1">${w.hasCustomTitle ? w.nom : `Élève : ${w.nom}`}</p>
+                    <div class="p-2.5 sm:p-4">
+                        <h3 class="font-serif text-sm sm:text-lg font-semibold text-white group-hover:text-artGold transition truncate">${w.titre}</h3>
+                        <p class="text-[10px] sm:text-xs text-zinc-400 mt-0.5 sm:mt-1 truncate">${w.hasCustomTitle ? w.nom : `Élève : ${w.nom}`}</p>
                     </div>
                 </div>
             `).join('');
         }
 
-        function openLightbox(id) {
+        async function openLightbox(id) {
             const work = WORKS.find(w => w.id === id);
             if (!work) return;
 
@@ -350,6 +367,26 @@
                 noAudioMsg.classList.remove("hidden");
             }
 
+            // Chargement du descriptif texte (.txt)
+            const descContainer = document.getElementById("descriptionContainer");
+            const descText = document.getElementById("modalDescription");
+            if (work.txtUrl) {
+                try {
+                    const txtRes = await fetch(work.txtUrl);
+                    if (txtRes.ok) {
+                        const content = await txtRes.text();
+                        descText.textContent = content;
+                        descContainer.classList.remove("hidden");
+                    } else {
+                        descContainer.classList.add("hidden");
+                    }
+                } catch {
+                    descContainer.classList.add("hidden");
+                }
+            } else {
+                descContainer.classList.add("hidden");
+            }
+
             renderComments(artworkKey);
 
             document.getElementById("lightbox").classList.remove("hidden");
@@ -364,7 +401,7 @@
                 list.innerHTML = `<p class="text-xs text-zinc-500 italic">Soyez le premier à laisser une impression !</p>`;
             } else {
                 list.innerHTML = comments.map(c => `
-                    <div class="bg-black/40 border border-white/5 p-2.5 rounded text-xs space-y-1">
+                    <div class="bg-black/40 border border-white/5 p-2 rounded text-xs space-y-0.5">
                         <div class="flex justify-between text-[10px] text-artGold font-semibold">
                             <span>${c.author}</span>
                         </div>
@@ -408,7 +445,6 @@
                 comment: comment
             };
 
-            // Ajout immédiat à l'affichage local
             if (!LOCAL_COMMENTS[artworkKey]) LOCAL_COMMENTS[artworkKey] = [];
             LOCAL_COMMENTS[artworkKey].unshift({ author, comment });
             renderComments(artworkKey);
