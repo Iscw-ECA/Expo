@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symphonie des Visages | Exposition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        artDark: '#0A0A0C',
+                        artCard: '#121216',
+                        artGold: '#D4AF37',
+                        artGoldHover: '#F3E5AB',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0A0A0C; color: #E4E4E7; }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFF 0%, #D4AF37 50%, #AA7C11 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-border { border-color: rgba(212, 175, 55, 0.3); }
+        .gold-border-focus:focus { border-color: #D4AF37; outline: none; }
+        .bar { animation: soundWave 1.2s infinite ease-in-out; }
+        @keyframes soundWave {
+            0%, 100% { height: 4px; }
+            50% { height: 24px; }
+        }
+    </style>
+</head>
+<body class="font-sans min-h-screen flex flex-col justify-between selection:bg-artGold selection:text-artDark">
+
+    <!-- HEADER -->
+    <header class="border-b border-white/10 backdrop-blur-md sticky top-0 z-40 bg-artDark/90">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <a href="../../index.html" class="text-xs uppercase tracking-widest text-zinc-400 hover:text-artGold transition flex items-center gap-1">
+                    ← Accueil Projet
+                </a>
+                <span class="text-zinc-600">|</span>
+                <h1 class="font-serif text-xl sm:text-2xl font-bold gold-gradient-text" id="projectTitle">Symphonie des Visages</h1>
+            </div>
+            
+            <div id="filterContainer" class="flex flex-wrap justify-center gap-2"></div>
+        </div>
+    </header>
+
+    <!-- MAIN GALLERY -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <p class="text-sm uppercase tracking-widest text-artGold mb-2">Année 2026-2027</p>
+            <h2 class="font-serif text-3xl sm:text-4xl font-normal text-white mb-4">Autoportraits & Soundscapes</h2>
+            <p class="text-zinc-400 text-sm leading-relaxed">
+                Cliquez sur un autoportrait pour l'agrandir et déclencher l'univers sonore composé par l'élève.
+            </p>
+        </div>
+
+        <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+    </main>
+
+    <!-- FOOTER & ADMIN TRIGGER -->
+    <footer class="border-t border-white/10 py-6 text-center text-xs text-zinc-500 relative">
+        <p>© 2026-2027 Exposition Artistique • Tous droits réservés</p>
+        <button onclick="promptAdmin()" title="Accès administration d'urgence" class="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-700 hover:text-artGold transition">
+            🔒
+        </button>
+    </footer>
+
+    <!-- LIGHTBOX POP-UP -->
+    <div id="lightbox" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-artCard border gold-border rounded-xl max-w-3xl w-full overflow-hidden flex flex-col md:flex-row relative max-h-[90vh]">
+            <button onclick="closeLightbox()" class="absolute top-3 right-3 z-10 bg-black/60 text-white rounded-full p-2 hover:text-artGold transition">✕</button>
+
+            <div class="md:w-1/2 bg-black flex items-center justify-center p-4">
+                <img id="modalImage" src="" alt="" class="max-h-[50vh] md:max-h-[70vh] object-contain rounded">
+            </div>
+
+            <div class="md:w-1/2 p-6 flex flex-col justify-between overflow-y-auto bg-artCard">
+                <div>
+                    <span id="modalClasse" class="inline-block px-2.5 py-1 text-xs font-semibold uppercase tracking-wider bg-artGold/20 text-artGold rounded mb-3"></span>
+                    <h3 id="modalTitle" class="font-serif text-2xl font-bold text-white mb-1"></h3>
+                    <p id="modalAuthor" class="text-sm text-zinc-400 mb-6"></p>
+
+                    <div class="bg-black/40 border border-white/10 rounded-lg p-4 mb-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs uppercase tracking-wider text-zinc-400">Univers Sonore</span>
+                            <div id="audioWave" class="flex items-end gap-1 h-6 opacity-40">
+                                <span class="bar w-1 bg-artGold" style="animation-delay: 0.1s"></span>
+                                <span class="bar w-1 bg-artGold" style="animation-delay: 0.3s"></span>
+                                <span class="bar w-1 bg-artGold" style="animation-delay: 0.2s"></span>
+                                <span class="bar w-1 bg-artGold" style="animation-delay: 0.4s"></span>
+                            </div>
+                        </div>
+                        <audio id="modalAudio" controls class="w-full h-10 rounded"></audio>
+                    </div>
+                </div>
+
+                <div class="border-t border-white/10 pt-4">
+                    <h4 class="text-sm font-semibold text-white mb-2">Laissez une impression</h4>
+                    <form id="commentForm" onsubmit="submitComment(event)" class="space-y-3">
+                        <input type="hidden" id="artworkId">
+                        <input type="text" id="commentAuthor" placeholder="Votre nom (optionnel)" class="w-full bg-black/50 border border-white/10 rounded px-3 py-2 text-sm text-white gold-border-focus">
+                        <textarea id="commentText" required placeholder="Qu'inspire cette œuvre pour vous ?" rows="2" class="w-full bg-black/50 border border-white/10 rounded px-3 py-2 text-sm text-white gold-border-focus"></textarea>
+                        <button type="submit" id="submitBtn" class="w-full bg-artGold hover:bg-artGoldHover text-artDark font-semibold py-2 px-4 rounded text-sm transition">
+                            Envoyer l'impression
+                        </button>
+                    </form>
+                    <p id="commentSuccess" class="hidden text-xs text-emerald-400 mt-2 text-center">Merci pour votre message !</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALE ADMIN SURCHARGE -->
+    <div id="adminModal" class="fixed inset-0 z-50 bg-black/95 hidden flex items-center justify-center p-4">
+        <div class="bg-artCard border gold-border rounded-xl p-6 max-w-md w-full">
+            <h3 class="font-serif text-xl font-bold text-artGold mb-4">Administration d'urgence</h3>
+            <p class="text-xs text-zinc-400 mb-4">Surcharger manuellement les liens d'un élève (URL image/audio externe).</p>
+            
+            <div class="space-y-3 text-sm">
+                <input type="text" id="adminWorkId" placeholder="ID Élève (ex: 1)" class="w-full bg-black border border-white/10 rounded p-2 text-white">
+                <input type="text" id="adminImageUrl" placeholder="Nouvelle URL Image (Optionnel)" class="w-full bg-black border border-white/10 rounded p-2 text-white">
+                <input type="text" id="adminAudioUrl" placeholder="Nouvelle URL Audio (Optionnel)" class="w-full bg-black border border-white/10 rounded p-2 text-white">
+            </div>
+
+            <div class="flex gap-2 mt-6">
+                <button onclick="saveAdminOverride()" class="flex-1 bg-artGold text-artDark font-semibold py-2 rounded text-xs">Appliquer</button>
+                <button onclick="closeAdminModal()" class="flex-1 bg-zinc-800 text-zinc-400 py-2 rounded text-xs">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const CURRENT_YEAR = "2026-2027";
+        const CURRENT_PROJECT = "Projet 1 - Symphonie des Visages";
+        const GOOGLE_SCRIPT_URL = "VOTRE_URL_GOOGLE_APPS_SCRIPT_ICI";
+        const ADMIN_PASSWORD = "1234"; // À personnaliser
+
+        // RÈGLE DE NOMMAGE DANS LE DOSSIER ASSETS: classe_nom_titre.jpg & .mp3
+        const BASE_WORKS = [
+            { id: "1", classe: "1Ca", nom: "Lucas", titre: "Autoportrait Électrique", file: "1Ca_Lucas" },
+            { id: "2", classe: "1Ca", nom: "Emma", titre: "Echos du Silence", file: "1Ca_Emma" },
+            { id: "3", classe: "1Cb", nom: "Thomas", titre: "Regards Croisés", file: "1Cb_Thomas" },
+            { id: "4", classe: "1Cc", nom: "Sarah", titre: "Harmonie Sombre", file: "1Cc_Sarah" }
+        ];
+
+        let manualOverrides = {};
+        let WORKS = [];
+        let activeFilter = "ALL";
+
+        document.addEventListener("DOMContentLoaded", () => {
+            buildWorksList();
+            renderFilters();
+            renderGallery();
+        });
+
+        function buildWorksList() {
+            WORKS = BASE_WORKS.map(item => {
+                const over = manualOverrides[item.id] || {};
+                return {
+                    ...item,
+                    imageUrl: over.imageUrl || `./assets/${item.file}.jpg`,
+                    audioUrl: over.audioUrl || `./assets/${item.file}.mp3`
+                };
+            });
+        }
+
+        function renderFilters() {
+            const classes = ["ALL", ...new Set(WORKS.map(w => w.classe))];
+            document.getElementById("filterContainer").innerHTML = classes.map(c => `
+                <button onclick="setFilter('${c}')" class="px-3 py-1.5 rounded-full text-xs font-medium transition ${activeFilter === c ? 'bg-artGold text-artDark' : 'bg-artCard text-zinc-400 border gold-border'}">
+                    ${c === 'ALL' ? 'Toutes les classes' : `Classe ${c}`}
+                </button>
+            `).join('');
+        }
+
+        function setFilter(c) {
+            activeFilter = c;
+            renderFilters();
+            renderGallery();
+        }
+
+        function renderGallery() {
+            const grid = document.getElementById("galleryGrid");
+            const filtered = activeFilter === "ALL" ? WORKS : WORKS.filter(w => w.classe === activeFilter);
+
+            grid.innerHTML = filtered.map(w => `
+                <div onclick="openLightbox('${w.id}')" class="bg-artCard border gold-border rounded-xl overflow-hidden cursor-pointer group hover:border-artGold transition duration-300">
+                    <div class="relative aspect-square bg-black overflow-hidden">
+                        <img src="${w.imageUrl}" alt="${w.titre}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy">
+                        <span class="absolute top-3 left-3 bg-black/70 text-artGold text-xs px-2.5 py-1 rounded border gold-border font-medium">${w.classe}</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-serif text-lg font-semibold text-white group-hover:text-artGold transition">${w.titre}</h3>
+                        <p class="text-xs text-zinc-400 mt-1">${w.nom}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openLightbox(id) {
+            const work = WORKS.find(w => w.id === id);
+            if (!work) return;
+
+            document.getElementById("modalImage").src = work.imageUrl;
+            document.getElementById("modalClasse").textContent = `Classe ${work.classe}`;
+            document.getElementById("modalTitle").textContent = work.titre;
+            document.getElementById("modalAuthor").textContent = `Par ${work.nom}`;
+            document.getElementById("artworkId").value = `${work.classe}_${work.nom}`;
+            
+            const audio = document.getElementById("modalAudio");
+            audio.src = work.audioUrl;
+            const wave = document.getElementById("audioWave");
+            audio.onplay = () => wave.classList.remove("opacity-40");
+            audio.onpause = () => wave.classList.add("opacity-40");
+
+            document.getElementById("lightbox").classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeLightbox() {
+            const audio = document.getElementById("modalAudio");
+            audio.pause();
+            audio.src = "";
+            document.getElementById("lightbox").classList.add("hidden");
+            document.body.style.overflow = "auto";
+        }
+
+        function submitComment(e) {
+            e.preventDefault();
+            const btn = document.getElementById("submitBtn");
+            btn.disabled = true;
+            btn.textContent = "Envoi...";
+
+            const payload = {
+                annee: CURRENT_YEAR,
+                projet: CURRENT_PROJECT,
+                artworkId: document.getElementById("artworkId").value,
+                author: document.getElementById("commentAuthor").value || "Anonyme",
+                comment: document.getElementById("commentText").value
+            };
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                btn.disabled = false;
+                btn.textContent = "Envoyer l'impression";
+                document.getElementById("commentForm").reset();
+                document.getElementById("commentSuccess").classList.remove("hidden");
+            }).catch(() => {
+                btn.disabled = false;
+                btn.textContent = "Envoyer l'impression";
+            });
+        }
+
+        // VERROUILLAGE ADMIN
+        function promptAdmin() {
+            const pass = prompt("Entrez le mot de passe administrateur :");
+            if (pass === ADMIN_PASSWORD) {
+                document.getElementById("adminModal").classList.remove("hidden");
+            } else if (pass !== null) {
+                alert("Mot de passe incorrect.");
+            }
+        }
+
+        function saveAdminOverride() {
+            const id = document.getElementById("adminWorkId").value;
+            const img = document.getElementById("adminImageUrl").value;
+            const aud = document.getElementById("adminAudioUrl").value;
+
+            if (id) {
+                manualOverrides[id] = {
+                    ...(img ? { imageUrl: img } : {}),
+                    ...(aud ? { audioUrl: aud } : {})
+                };
+                buildWorksList();
+                renderGallery();
+                closeAdminModal();
+            }
+        }
+
+        function closeAdminModal() {
+            document.getElementById("adminModal").classList.add("hidden");
+        }
+    </script>
+</body>
+</html>
