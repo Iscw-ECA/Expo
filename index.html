@@ -38,16 +38,21 @@
 </head>
 <body class="font-sans min-h-screen flex flex-col justify-between selection:bg-artGold selection:text-artDark">
 
-    <!-- HEADER (Identique aux projets) -->
+    <!-- HEADER (Version initiale aérée avec le badge vert) -->
     <header class="border-b border-white/10 backdrop-blur-md sticky top-0 z-40 bg-artDark/90">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-            <div>
-                <h1 class="font-serif text-lg sm:text-xl font-bold gold-gradient-text leading-tight">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-center sm:text-left">
+                <h1 class="font-serif text-xl sm:text-2xl font-bold gold-gradient-text leading-tight">
                     Espace Exposition
                 </h1>
-                <p class="text-xs text-zinc-400 font-sans">
+                <p class="text-xs text-zinc-400 font-sans mt-0.5">
                     Classes d'Education Culturelle et Artistiques - ISCW
                 </p>
+            </div>
+            
+            <div class="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-full">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="text-xs text-emerald-300 font-medium tracking-wide uppercase">Exposition en ligne</span>
             </div>
         </div>
     </header>
