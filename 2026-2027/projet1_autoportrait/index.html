@@ -262,7 +262,39 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             fetchWorksFromGithub();
+            fetchCommentsFromSheet();
         });
+
+        async function fetchCommentsFromSheet() {
+            try {
+                const url = `${GOOGLE_SCRIPT_URL}?annee=${encodeURIComponent(CURRENT_YEAR)}&projet=${encodeURIComponent(CURRENT_PROJECT)}`;
+                const res = await fetch(url);
+                if (!res.ok) return;
+                const data = await res.json();
+                if (!Array.isArray(data)) return;
+
+                const grouped = {};
+                data.forEach(item => {
+                    if (!item.artworkId || !item.comment) return;
+                    if (!grouped[item.artworkId]) grouped[item.artworkId] = [];
+                    grouped[item.artworkId].push({
+                        author: item.author || "Anonyme",
+                        comment: item.comment
+                    });
+                });
+
+                LOCAL_COMMENTS = grouped;
+
+                if (currentWorkId) {
+                    const work = WORKS.find(w => w.id === currentWorkId);
+                    if (work) {
+                        renderComments(`${work.classe}_${work.nom}`);
+                    }
+                }
+            } catch (err) {
+                console.log("Erreur de chargement des commentaires :", err);
+            }
+        }
 
         async function fetchWorksFromGithub() {
             const grid = document.getElementById("galleryGrid");
