@@ -162,8 +162,18 @@
             <!-- COLONNE GAUCHE : IMAGE (CLIQUABLE) & DESCRIPTIF DÉDIÉ -->
             <div class="md:w-3/5 bg-black/80 flex flex-col items-center justify-between p-3 sm:p-5 overflow-y-auto max-h-[50vh] md:max-h-[95vh]">
                 <div class="w-full flex-grow flex flex-col items-center justify-center relative group cursor-pointer" onclick="openFullscreen(event)">
+                    <!-- FLÈCHE PRÉCÉDENT -->
+                    <button id="prevBtn" onclick="prevWork(event)" aria-label="Œuvre précédente" class="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-artGold text-white hover:text-artDark rounded-full w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center transition border gold-border shadow-lg">
+                        ❮
+                    </button>
+
                     <img id="modalImage" src="" alt="" class="max-h-[38vh] md:max-h-[65vh] w-auto max-w-full object-contain rounded shadow-2xl transition group-hover:scale-[1.01]">
                     
+                    <!-- FLÈCHE SUIVANT -->
+                    <button id="nextBtn" onclick="nextWork(event)" aria-label="Œuvre suivante" class="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-artGold text-white hover:text-artDark rounded-full w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center transition border gold-border shadow-lg">
+                        ❯
+                    </button>
+
                     <!-- Macaron loupe repositionné pour éviter la superposition -->
                     <span class="absolute top-2 right-2 bg-black/80 text-artGold text-[10px] sm:text-xs px-2.5 py-1 rounded-full border gold-border opacity-90 transition flex items-center gap-1 shadow-md">
                         🔍 Plein écran
@@ -248,6 +258,7 @@
         let WORKS = [];
         let LOCAL_COMMENTS = {};
         let activeFilter = "ALL";
+        let currentWorkId = null;
 
         document.addEventListener("DOMContentLoaded", () => {
             fetchWorksFromGithub();
@@ -345,13 +356,41 @@
             `).join('');
         }
 
+        function getFilteredWorks() {
+            return activeFilter === "ALL" ? WORKS : WORKS.filter(w => w.classe === activeFilter);
+        }
+
+        function prevWork(e) {
+            if (e) e.stopPropagation();
+            const list = getFilteredWorks();
+            if (list.length <= 1) return;
+            const currentIndex = list.findIndex(w => w.id === currentWorkId);
+            const prevIndex = (currentIndex - 1 + list.length) % list.length;
+            openLightbox(list[prevIndex].id);
+        }
+
+        function nextWork(e) {
+            if (e) e.stopPropagation();
+            const list = getFilteredWorks();
+            if (list.length <= 1) return;
+            const currentIndex = list.findIndex(w => w.id === currentWorkId);
+            const nextIndex = (currentIndex + 1) % list.length;
+            openLightbox(list[nextIndex].id);
+        }
+
         async function openLightbox(id) {
             const work = WORKS.find(w => w.id === id);
             if (!work) return;
 
+            currentWorkId = id;
+            const list = getFilteredWorks();
+            document.getElementById("prevBtn").classList.toggle("hidden", list.length <= 1);
+            document.getElementById("nextBtn").classList.toggle("hidden", list.length <= 1);
+
             const artworkKey = `${work.classe}_${work.nom}`;
 
             document.getElementById("modalImage").src = work.imageUrl;
+            document.getElementById("fullscreenImage").src = work.imageUrl;
             document.getElementById("modalClasse").textContent = `Classe ${work.classe}`;
             document.getElementById("modalTitle").textContent = work.titre;
             document.getElementById("modalAuthor").textContent = work.hasCustomTitle ? `Par ${work.nom}` : `Artiste : ${work.nom}`;
@@ -447,6 +486,22 @@
         document.getElementById("lightbox").addEventListener("click", (e) => {
             if (e.target.id === "lightbox") {
                 closeLightbox();
+            }
+        });
+
+        document.addEventListener("keydown", (e) => {
+            const lightboxOpen = !document.getElementById("lightbox").classList.contains("hidden");
+            if (!lightboxOpen) return;
+            if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+
+            if (e.key === "ArrowLeft") prevWork();
+            if (e.key === "ArrowRight") nextWork();
+            if (e.key === "Escape") {
+                if (!document.getElementById("fullscreenModal").classList.contains("hidden")) {
+                    closeFullscreen();
+                } else {
+                    closeLightbox();
+                }
             }
         });
 
