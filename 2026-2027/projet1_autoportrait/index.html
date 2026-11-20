@@ -160,14 +160,14 @@
             <button onclick="closeLightbox()" class="absolute top-3 right-3 z-20 bg-black/80 text-white rounded-full p-2 hover:text-artGold transition border border-white/10">✕</button>
 
             <!-- COLONNE GAUCHE : IMAGE (CLIQUABLE) & DESCRIPTIF DÉDIÉ -->
-            <div class="md:w-3/5 bg-black/80 flex flex-col items-center justify-between p-3 sm:p-5 overflow-y-auto max-h-[50vh] md:max-h-[95vh]">
+            <div class="md:w-3/5 bg-black/80 flex flex-col items-center justify-between p-3 sm:p-5 overflow-y-auto max-h-[44vh] md:max-h-[95vh] shrink-0">
                 <div class="w-full flex-grow flex flex-col items-center justify-center relative group cursor-pointer" onclick="openFullscreen(event)">
                     <!-- FLÈCHE PRÉCÉDENT -->
                     <button id="prevBtn" onclick="prevWork(event)" aria-label="Œuvre précédente" class="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-artGold text-white hover:text-artDark rounded-full w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center transition border gold-border shadow-lg">
                         ❮
                     </button>
 
-                    <img id="modalImage" src="" alt="" class="max-h-[38vh] md:max-h-[65vh] w-auto max-w-full object-contain rounded shadow-2xl transition group-hover:scale-[1.01]">
+                    <img id="modalImage" src="" alt="" class="max-h-[32vh] md:max-h-[65vh] w-auto max-w-full object-contain rounded shadow-2xl transition group-hover:scale-[1.01]">
                     
                     <!-- FLÈCHE SUIVANT -->
                     <button id="nextBtn" onclick="nextWork(event)" aria-label="Œuvre suivante" class="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-artGold text-white hover:text-artDark rounded-full w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center transition border gold-border shadow-lg">
@@ -190,17 +190,17 @@
             </div>
 
             <!-- COLONNE DROITE : INFOS, AUDIO & COMMENTAIRES -->
-            <div class="md:w-2/5 p-4 sm:p-6 flex flex-col justify-between overflow-y-auto bg-artCard border-t md:border-t-0 md:border-l border-white/10">
-                <div class="space-y-4">
-                    <div>
-                        <span id="modalClasse" class="inline-block px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider bg-artGold/20 text-artGold rounded mb-1.5"></span>
-                        <h3 id="modalTitle" class="font-serif text-xl sm:text-2xl font-bold text-white mb-0.5"></h3>
+            <div class="md:w-2/5 p-3 sm:p-6 flex flex-col flex-1 min-h-0 overflow-y-auto bg-artCard border-t md:border-t-0 md:border-l border-white/10">
+                <div class="flex flex-col flex-1 min-h-0 space-y-3 sm:space-y-4">
+                    <div class="shrink-0">
+                        <span id="modalClasse" class="inline-block px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider bg-artGold/20 text-artGold rounded mb-1"></span>
+                        <h3 id="modalTitle" class="font-serif text-lg sm:text-2xl font-bold text-white mb-0.5"></h3>
                         <p id="modalAuthor" class="text-xs sm:text-sm text-zinc-400"></p>
                     </div>
 
                     <!-- LECTEUR AUDIO -->
-                    <div id="audioContainer" class="bg-black/40 border border-white/10 rounded-lg p-3">
-                        <div class="flex items-center justify-between mb-2">
+                    <div id="audioContainer" class="shrink-0 bg-black/40 border border-white/10 rounded-lg p-2.5 sm:p-3">
+                        <div class="flex items-center justify-between mb-1.5">
                             <span class="text-[10px] uppercase tracking-wider text-zinc-400">Univers Sonore</span>
                             <div id="audioWave" class="flex items-end gap-1 h-4 opacity-40">
                                 <span class="bar w-1 bg-artGold" style="animation-delay: 0.1s"></span>
@@ -211,23 +211,23 @@
                         </div>
                         <audio id="modalAudio" controls class="w-full h-8 rounded"></audio>
                     </div>
-                    <p id="noAudioMsg" class="hidden text-xs text-zinc-500 italic">Aucune création sonore pour cette œuvre.</p>
+                    <p id="noAudioMsg" class="hidden shrink-0 text-xs text-zinc-500 italic">Aucune création sonore pour cette œuvre.</p>
 
-                    <!-- LISTE DES COMMENTAIRES -->
-                    <div class="border-t border-white/10 pt-3">
-                        <h4 class="text-xs font-semibold uppercase tracking-wider text-artGold mb-2 flex items-center gap-1.5">
+                    <!-- LISTE DES COMMENTAIRES (DYNAMIQUE SUR TOUTE LA HAUTEUR DISPONIBLE) -->
+                    <div class="border-t border-white/10 pt-2.5 sm:pt-3 flex flex-col flex-1 min-h-0">
+                        <h4 class="shrink-0 text-xs font-semibold uppercase tracking-wider text-artGold mb-2 flex items-center gap-1.5">
                             💬 Impressions des visiteurs
                         </h4>
-                        <div id="commentsList" class="space-y-2 max-h-36 overflow-y-auto pr-1">
+                        <div id="commentsList" class="space-y-2 flex-1 min-h-[90px] overflow-y-auto pr-1">
                             <p class="text-xs text-zinc-500 italic">Soyez le premier à laisser une impression !</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- FORMULAIRE DE COMMENTAIRE -->
-                <div class="border-t border-white/10 pt-3 mt-3">
+                <!-- FORMULAIRE DE COMMENTAIRE (TOUJOURS VISIBLE EN BAS) -->
+                <div class="shrink-0 border-t border-white/10 pt-2.5 sm:pt-3 mt-2.5 sm:mt-3">
                     <h4 class="text-xs font-semibold text-white mb-1.5">Laisser une impression positive</h4>
-                    <form id="commentForm" onsubmit="submitComment(event)" class="space-y-2">
+                    <form id="commentForm" onsubmit="submitComment(event)" class="space-y-1.5 sm:space-y-2">
                         <input type="hidden" id="artworkId">
                         <input type="text" id="commentAuthor" placeholder="Votre nom (optionnel)" class="w-full bg-black/50 border border-white/10 rounded px-2.5 py-1 text-xs text-white gold-border-focus">
                         <textarea id="commentText" required placeholder="Qu'inspire cette œuvre pour vous ?" rows="2" class="w-full bg-black/50 border border-white/10 rounded px-2.5 py-1 text-xs text-white gold-border-focus"></textarea>
